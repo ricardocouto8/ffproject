@@ -21,9 +21,6 @@ class Team(object):
         "team_money" : str(num2str(self.money)),
         "team_league_position" : str(self.league_position),
         }
-
-
-        pprint(vars(self))
         return txt
 
     def sort_players(self, sort):
