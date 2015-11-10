@@ -114,22 +114,23 @@ class Player(object):
 
     def calc_season_salary(self):
         apparent_skill = self.skill
+        print apparent_skill
         factors = PLAYER_GLOBALS["PRICE_SKILL"]
         power = [0, 0, 0, 0, 0, 0]
-
+        print factors
         get_lastpower = (apparent_skill - PLAYER_GLOBALS["MIN_SKILL"]) / 10
         get_howmuchpower = (apparent_skill - PLAYER_GLOBALS["MIN_SKILL"]) % 10
-
+        print get_lastpower
+        print get_howmuchpower
         for i in range(get_lastpower + 1):
             power[i] = 3
             if i == get_lastpower:
                 power[i] = get_howmuchpower / 3.0
 
-        salary = pow(factors[0],power[0]) * pow(factors[1],power[1]) * pow(factors[2],power[2]) * pow(factors[3],power[3]) * pow(factors[4],power[4])
-
-
-        annual_salary = salary / PLAYER_GLOBALS["AVERAGE_SALARIES_PER_VALUE"]
-        return round(annual_salary, 1)
+        salary = pow(factors[0],power[0]) * pow(factors[1],power[1]) * pow(factors[2],power[2]) * pow(factors[3],power[3]) * pow(factors[4],power[4]) * 1000
+        print salary
+        annual_salary = salary  / PLAYER_GLOBALS["AVERAGE_SALARIES_PER_VALUE"]
+        return int(round(annual_salary, 0))
 
     def turn_salary(self):
         return self.season_salary / float(GAME_GLOBALS["TOTAL_TURNS"])
@@ -155,7 +156,7 @@ class Player(object):
             if i == get_lastpower:
                 power[i] = get_howmuchpower / 3.0
 
-        price = start_value * pow(factors[0],power[0]) * pow(factors[1],power[1]) * pow(factors[2],power[2]) * pow(factors[3],power[3]) * pow(factors[4],power[4])
+        price = start_value * pow(factors[0],power[0]) * pow(factors[1],power[1]) * pow(factors[2],power[2]) * pow(factors[3],power[3]) * pow(factors[4],power[4]) * 1000
 
         if price / 100 >= 1:
             return int(price) - int(price) % 10
@@ -210,7 +211,7 @@ class Player(object):
         self.pos = pos
 
         #SKILL
-        self.skill = create_skill(skill, avg_skill)
+        self.skill = skill
 
         if skill_exp is None:
             skill_exp = random.random()

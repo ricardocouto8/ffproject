@@ -1,10 +1,8 @@
 import Game as GAME
 from Config import *
-import Team
-import Player
 
-GAME.new_game()
-GAME.season_start()
+#GAME.new_game()
+#GAME.season_start()
 
 def one_season():
     while GAME.season == 0:
@@ -35,3 +33,7 @@ def weekly_salaries():
     print test_team.money
     test_team.weekly_player_salaries_payment()
     print test_team.money
+
+def player_salary_test():
+    for i in range(PLAYER_GLOBALS["MAX_SKILL"]):
+        print "Skill:", i + 1, calc_season_salary(i)
