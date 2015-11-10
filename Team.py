@@ -1,8 +1,7 @@
 from Config import *
 import random
 random.seed()
-from pprint import pprint
-from operator import add, sub
+import HelperMethods
 
 class Team(object):
 
@@ -18,7 +17,7 @@ class Team(object):
         "team_name" : str(self.name),
         "team_league_points"  : str(self.league_stats.points),
         "team_goal_difference" : goal_difference,
-        "team_money" : str(num2str(self.money)),
+        "team_money" : str(HelperMethods.num2str(self.money)),
         "team_league_position" : str(self.league_position),
         }
         return txt
@@ -86,9 +85,9 @@ class Team(object):
     #   Trains all players in team
     # & Run once per turn
 
-        ground_norm = normalize(5, TEAM_GLOBALS["MIN_TRAINING_GROUND"], TEAM_GLOBALS["MAX_TRAINING_GROUND"])
+        ground_norm = HelperMethods.normalize(5, TEAM_GLOBALS["MIN_TRAINING_GROUND"], TEAM_GLOBALS["MAX_TRAINING_GROUND"])
         for player in self.players:
-            skill_norm = normalize(player.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
+            skill_norm = HelperMethods.normalize(player.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
             if ground_norm >= skill_norm:
                 ground_inf = 1
             else:
@@ -161,6 +160,12 @@ class Team(object):
             self.money -= value
             return True
         return False
+
+    def weekly_player_salaries_payment(self):
+        total_salaries = 0
+        for player in self.players:
+            total_salaries += player.season_salary / GAME_GLOBALS["TOTAL_TURNS"]
+
 
     def __str__(self):
         return str(self.idx) + '\n' + "Rep: " + str(self.rep) + '\n' +  "DF|MD|AT: " + str(self.skill[0]) + " | " + str(self.skill[1]) + " | " + str(self.skill[2]) + '\n\n'

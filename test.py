@@ -20,7 +20,6 @@ def one_season():
 
 def print_table():
     tables = GAME.leagues_table()
-    division = 0
     table = tables[0]
     position = 1
     print "Division 0"

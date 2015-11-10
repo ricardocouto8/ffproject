@@ -3,6 +3,7 @@ import sys, math, random
 import string
 random.seed()
 import Line
+import HelperMethods
 
 class Player(object):
 
@@ -22,8 +23,8 @@ class Player(object):
         "player_age"  : str(self.age),
         "player_skill": str(self.skill) + str(turn_skill_change),
         "player_pos"  : language["pos" + str(self.pos)],
-        "player_salary" : str(num2str(self.season_salary)),
-        "player_value" : str(num2str(self.value)),
+        "player_salary" : str(HelperMethods.num2str(self.season_salary)),
+        "player_value" : str(HelperMethods.num2str(self.value)),
         }
 
         return txt
@@ -35,8 +36,8 @@ class Player(object):
         if self.age >= PLAYER_GLOBALS["MIN_AGE"]:
             age_int = PLAYER_GLOBALS["AGE_TRAINING_INF"]
             inc_int = PLAYER_GLOBALS["TRAINING_PER_AGE"]
-            age_norm = normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
-            skill_norm = normalize(self.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
+            age_norm = HelperMethods.normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
+            skill_norm = HelperMethods.normalize(self.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
             skill_inf = 1
             if skill_norm >= 0.85:
                 skill_inf = 0.5
@@ -46,7 +47,7 @@ class Player(object):
                     x2 = age_int[index - 1]
                     y1 = inc_int[index]
                     y2 = inc_int[index - 1]
-                    increase = ysolver(point1=(x1, y1), point2=(x2, y2), x = age_norm)
+                    increase = HelperMethods.ysolver(point1=(x1, y1), point2=(x2, y2), x = age_norm)
                     break
 
             self.increase_per_turn = (increase * skill_inf) / float(GAME_GLOBALS["TOTAL_TURNS"])
@@ -57,8 +58,8 @@ class Player(object):
     #   Decides if a player retired and if so, sets retired = True
     #   Returns True if retired, False if not
     # & Run once per season
-        age_norm = normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
-        skill_norm = normalize(self.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
+        age_norm = HelperMethods.normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
+        skill_norm = HelperMethods.normalize(self.skill, PLAYER_GLOBALS["MIN_SKILL"], PLAYER_GLOBALS["MAX_SKILL"])
         if age_norm >= 1:
             self.retired = True
             return True
@@ -136,7 +137,7 @@ class Player(object):
         factors = PLAYER_GLOBALS["PRICE_SKILL"]
         power = [0, 0, 0, 0, 0, 0]
 
-        age_norm = normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
+        age_norm = HelperMethods.normalize(self.age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
         age_inf_price = int(age_norm * (len(starting_values) - 2))
         point1 = (age_inf_price, starting_values[age_inf_price])
         point2 = (age_inf_price + 1, starting_values[age_inf_price + 1])
@@ -178,7 +179,7 @@ class Player(object):
             #     random_var = random.randint(-skill_variation, skill_variation)
             #     skill += random_var
             skill_age_inf = PLAYER_GLOBALS["MAX_SKILL"] * 0.05 + skill * 0.2
-            age_inf = 1 - 2 * normalize(age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
+            age_inf = 1 - 2 * HelperMethods.normalize(age, PLAYER_GLOBALS["MIN_AGE"], PLAYER_GLOBALS["MAX_AGE"])
 
             if age_inf > 0:
                 skill -= skill_age_inf * age_inf

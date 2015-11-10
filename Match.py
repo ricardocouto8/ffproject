@@ -4,6 +4,7 @@ import Line
 import Player
 random.seed()
 from pprint import pprint
+import HelperMethods
 
 class Match(object):
 
@@ -49,7 +50,7 @@ class Match(object):
             for player in sorted_players:
                 player_list.append((player, player.skill * + prob_scoring_per_pos[player.pos]))
 
-            self.goalscorers[team_index].append((weighted_choice(player_list), self.minutes))
+            self.goalscorers[team_index].append((HelperMethods.weighted_choice(player_list), self.minutes))
         return True
 
     def minute(self):
@@ -80,7 +81,7 @@ class Match(object):
                 home_concedes_prob = home_concedes_prob * MATCH_GLOBALS["ANTI_GOLEADAS"]
 
             #PROBABILIDADE HUMANA DE MARCAR NO FINAL
-            min_norm = normalize(self.minutes, 0, MATCH_GLOBALS["TOTAL_TURNS"])
+            min_norm = HelperMethods.normalize(self.minutes, 0, MATCH_GLOBALS["TOTAL_TURNS"])
             if min_norm <= 0.2:
                 if self.away.manager.human:
                     home_scores_prob = home_scores_prob * MATCH_GLOBALS["GOAL_BEGINNING_END_MULTI"]
