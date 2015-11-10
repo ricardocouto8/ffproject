@@ -131,6 +131,9 @@ class Player(object):
         annual_salary = salary / PLAYER_GLOBALS["AVERAGE_SALARIES_PER_VALUE"]
         return round(annual_salary, 1)
 
+    def turn_salary(self):
+        return self.season_salary / float(GAME_GLOBALS["TOTAL_TURNS"])
+
     def calc_price(self):
         apparent_skill = self.skill
         starting_values = PLAYER_GLOBALS["PRICE_AGE"]

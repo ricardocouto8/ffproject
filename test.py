@@ -1,8 +1,9 @@
 import Game as GAME
 from Config import *
+import Team
+import Player
 
 GAME.new_game()
-GAME.add_human_manager("Ricardo", 31)
 GAME.season_start()
 
 def one_season():
@@ -29,4 +30,8 @@ def print_table():
         print str(position) + '\t' + team_name + '\t' + team_points
         position += 1
 
-one_season()
+def weekly_salaries():
+    test_team = GAME.competitions[0].teams[0]
+    print test_team.money
+    test_team.weekly_player_salaries_payment()
+    print test_team.money

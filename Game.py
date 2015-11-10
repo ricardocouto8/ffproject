@@ -16,7 +16,6 @@ def new_game():
     def_competitions = []
     def_managers = []
 
-
     min_active_rep = TEAM_GLOBALS["MAX_REP"] - (TEAM_GLOBALS["MAX_REP"] - TEAM_GLOBALS["MIN_REP"]) * 0.85
     rep_step = (TEAM_GLOBALS["MAX_REP"] - min_active_rep) / float(GAME_GLOBALS["ACTIVE_LEAGUES"] * GAME_GLOBALS["TEAMS_PER_LEAGUE"])
     current_rep = TEAM_GLOBALS["MAX_REP"]
@@ -171,11 +170,15 @@ def turn_past():
     for human in humans:
         human.team.training()
         human.ready = False
+    for comp in competitions:
+        for team in comp:
+            team.weekly_player_salaries_payment()
     global turn
     turn += 1
     if turn >= GAME_GLOBALS["TOTAL_TURNS"]:
-        season_start()
         season_end()
+        season_start()
+
 
 def minute_matches():
     match_status = []

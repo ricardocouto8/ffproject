@@ -164,7 +164,9 @@ class Team(object):
     def weekly_player_salaries_payment(self):
         total_salaries = 0
         for player in self.players:
-            total_salaries += player.season_salary / GAME_GLOBALS["TOTAL_TURNS"]
+            total_salaries += player.turn_salary()
+        self.money -= total_salaries
+        return total_salaries
 
 
     def __str__(self):
